@@ -31,10 +31,11 @@ SECRET_KEY = 'django-insecure-^%p53a23@w(si^(-w^grqdns3p4p8%s3^-x^2@&ge*0ilquj+3
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
+    'https://backendbarber-copia.onrender.com',  
     'localhost',
     '127.0.0.1',
     '.onrender.com',
-
+    'frontend-baber-copia.vercel.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -159,7 +160,7 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React/Vite
     "http://localhost:3000",  # Create React App
-
+    'frontend-baber-copia.vercel.app',
 ]
 
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
