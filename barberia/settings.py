@@ -31,16 +31,13 @@ SECRET_KEY = 'django-insecure-^%p53a23@w(si^(-w^grqdns3p4p8%s3^-x^2@&ge*0ilquj+3
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
-    'backend-barberia-ohjh.onrender.com',
     'localhost',
     '127.0.0.1',
     '.onrender.com',
-    'frontend-barberia-sage.vercel.app'
 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://backend-barberia-ohjh.onrender.com',
     'https://*.onrender.com'
 ]
 # Application definition
@@ -162,7 +159,6 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React/Vite
     "http://localhost:3000",  # Create React App
-    "https://frontend-barberia-sage.vercel.app",
 
 ]
 
