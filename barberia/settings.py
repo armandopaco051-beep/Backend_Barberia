@@ -39,6 +39,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
+    'https://backend-barberia-ohjh.onrender.com',
     'https://*.onrender.com'
 ]
 # Application definition
@@ -160,7 +161,7 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React/Vite
     "http://localhost:3000",  # Create React App
-    'frontend-baber-copia.vercel.app',
+    "frontend-baber-copia.vercel.app",
 ]
 
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
