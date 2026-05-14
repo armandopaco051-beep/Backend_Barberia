@@ -161,7 +161,7 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React/Vite
     "http://localhost:3000",  # Create React App
-    "frontend-baber-copia.vercel.app" #esto es para el pryecto desplegado
+    "https://frontend-baber-copia.vercel.app"
 ]
 
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
