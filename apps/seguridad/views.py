@@ -997,7 +997,7 @@ class AsistenciaBarberoListCreateView(APIView):
                     "estado": "PRESENTE",
                     "hora_entrada": "09:00:00",
                     "hora_salida": "18:00:00",
-                    "observacion": "Asistencia normal",
+                    "comentario": "Asistencia normal",
                 },
                 request_only=True,
             ),
@@ -1007,7 +1007,7 @@ class AsistenciaBarberoListCreateView(APIView):
                     "codigo_barbero": "BARB001",
                     "fecha": "2026-05-10",
                     "estado": "AUSENTE",
-                    "observacion": "No asistio",
+                    "comentario": "No asistio",
                 },
                 request_only=True,
             )

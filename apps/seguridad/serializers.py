@@ -454,6 +454,7 @@ class AsistenciaBarberoSerializer(serializers.ModelSerializer):
     )
     barbero = serializers.SerializerMethodField(read_only=True)
     estado = serializers.CharField(max_length=20)
+    comentario = serializers.CharField(required=False, allow_blank=True)
 
     class Meta:
         model = AsistenciaBarbero
@@ -465,7 +466,7 @@ class AsistenciaBarberoSerializer(serializers.ModelSerializer):
             'estado',
             'hora_entrada',
             'hora_salida',
-            'observacion',
+            'comentario',
             'fecha_registro',
             'fecha_actualizacion',
         ]
@@ -474,6 +475,13 @@ class AsistenciaBarberoSerializer(serializers.ModelSerializer):
     @extend_schema_field(serializers.CharField())
     def get_barbero(self, obj):
         return f"{obj.codigo_barbero.nombre} {obj.codigo_barbero.apellido}".strip()
+
+    def to_internal_value(self, data):
+        if hasattr(data, 'copy'):
+            data = data.copy()
+        if 'comentario' not in data and 'observacion' in data:
+            data['comentario'] = data['observacion']
+        return super().to_internal_value(data)
 
     def validate_estado(self, value):
         estado = value.upper()

@@ -10,7 +10,7 @@ from .models import CategoriaServicio, Servicio
 from .serializers import CategoriaServicioSerializer, ServicioSerializer
 
 
-# CRUD de CU6 Gestionar categorias.
+# CRUD de Gestionar categorias.
 # GET lista categorias y POST crea una nueva categoria.
 @extend_schema(tags=["CU6 - Gestionar Categorias"])
 class CategoriaServicioListCreateView(APIView):

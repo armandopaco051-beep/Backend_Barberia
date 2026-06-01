@@ -10,16 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-from pathlib import Path
-from dotenv import load_dotenv
+import os
 from datetime import timedelta
-import os 
-import dj_database_url
 from pathlib import Path
+
+import dj_database_url
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
+
+
+def env_list(name, default):
+    value = os.getenv(name, '')
+    if not value.strip():
+        return default
+    return [item.strip() for item in value.split(',') if item.strip()]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -30,18 +37,20 @@ SECRET_KEY = 'django-insecure-^%p53a23@w(si^(-w^grqdns3p4p8%s3^-x^2@&ge*0ilquj+3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [
-    'https://backendbarber-copia.onrender.com',  
+ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', [
     'localhost',
     '127.0.0.1',
+    'backendbarber-copia.onrender.com',
     '.onrender.com',
-    'frontend-baber-copia.vercel.app',
-]
+])
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://backend-barberia-ohjh.onrender.com',
-    'https://*.onrender.com'
-]
+CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS', [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://frontend-baber-copia.vercel.app',
+    'https://backendbarber-copia.onrender.com',
+    'https://*.onrender.com',
+])
 # Application definition
 
 INSTALLED_APPS = [
@@ -114,8 +123,16 @@ WSGI_APPLICATION = 'barberia.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+DATABASE_URL = os.getenv('DATABASE_URL', '').strip()
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL')),
+    'default': (
+        dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+        if DATABASE_URL
+        else {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    ),
 }
 
 
@@ -158,11 +175,11 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,   # ← Para CU2: invalidar token al cerrar sesión
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # React/Vite
-    "http://localhost:3000",  # Create React App
-    "https://frontend-baber-copia.vercel.app"
-]
+CORS_ALLOWED_ORIGINS = env_list('CORS_ALLOWED_ORIGINS', [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://frontend-baber-copia.vercel.app',
+])
 
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
